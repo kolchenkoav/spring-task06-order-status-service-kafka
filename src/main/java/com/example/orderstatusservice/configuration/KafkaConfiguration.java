@@ -2,6 +2,7 @@ package com.example.orderstatusservice.configuration;
 
 import com.example.orderstatusservice.model.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -16,7 +17,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Slf4j
 @Configuration
 public class KafkaConfiguration {
     @Value("${spring.kafka.bootstrap-servers}")
@@ -53,6 +54,7 @@ public class KafkaConfiguration {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, Order> kafkaMessageConcurrentKafkaListenerContainerFactory(
             ConsumerFactory<String, Order> kafkaMessageConsumerFactory) {
+        log.info("***********************************************************************");
         ConcurrentKafkaListenerContainerFactory<String, Order> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(kafkaMessageConsumerFactory);
         return factory;
